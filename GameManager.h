@@ -18,5 +18,5 @@ public:
 	//인벤토리 출력 
 	//vector<Item*> inventory / 요소 = new HealthPotion , new AttackPotion ... 
 	void disPlayInventory(vector<Item*>& item);
-	void Battle(Character* player);
+	void Battle(Character* player);//
 };
