@@ -1,5 +1,6 @@
 #include "Character.h"
-class Item
+#include "Item.h"
+#include "Monster.h"
 
 
 // instance 초기화
@@ -69,7 +70,38 @@ void Character::levelUp()
 // 아이템 사용 함수
 void Character::useItem()
 {
+	int choiseNum;
+	while (choiseNum != 3)
+	{
+	cout << "=======아이템 사용==============" << endl;
+	cout << "어떤 아이템을 사용하시겠습니까?" << endl;
+	cout << "1. 체력포션 : 체력을 50 회복한다. (현재 수량 : " << HealthPotion->getQuantity() << "개)" << endl;
+	cout << "2. 어택부스트 : 공격력을 10 증가시킨다. (현재 수량 : " << AttackBoost->getQuantity() << "개)" << endl;
+	cout << "3. 아이템을 사용하지 않는다." << endl;
+	cout << "번호를 선택해주세요";
+	cin >> choiseNum;
 
+	switch (choiseNum)
+	{
+	case 1:
+		if (health != maxHealth)
+		{
+			Item::HealthPotion();
+			cout << "체력을 " << Item::newHealth << " 회복했습니다!" << endl;
+				break;
+		}
+		else
+			cout << "이미 체력이 완전 회복된 상태입니다." << endl;
+		break;
+	case 2:
+		Item::AttackBoost();
+		cout << "공격력이 10 증가했습니다!" << endl;
+		break;
+	default:
+		cout << "잘못된 번호를 선택하셨습니다. 다시 선택해주세요." << endl;
+		break;
+	}
+	}	
 }
 
 // 데미지 함수
