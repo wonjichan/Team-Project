@@ -21,7 +21,7 @@ void::Monster::takeDamage(Character* player)
 	int Random_gold = 0; 
 	srand((unsigned int)time(NULL)); 
 	Random_gold = rand() % 11 + 10;
-	player = Character::getInstance(player->getName());
+	
 	cout << player->getName() << "이 " << getName() << "을 공격합니다!" << endl;
 	health -= player->getAttack();
 	//몬스터가 죽었을 때 
@@ -36,7 +36,7 @@ void::Monster::takeDamage(Character* player)
 		player->setGold(Random_gold);
 		if (player->getEXP() >= 100)
 		{
-			player->levelUp(); 
+			player->levelUp();
 		}
 		cout << "전투에서 승리했습니다!" << "50 EXP와 " << Random_gold <<" 골드를 휙득했습니다. " << 
 			" 현재 EXP:" << player->getEXP() << "/100" << ", 골드:" << player->getGold() << endl;
@@ -62,12 +62,7 @@ void Monster::TryDropItem(Character* player)
 {
 	if (rand() % 100 < 30){
 		cout << "아이템을 드랍했습니다!" << endl; 
-		if(rand() < 15){ 
-			cout << "축하합니다! 체력이 50 증가합니다!" << endl; 
-			player->setHealth(50);
-		}
-		cout << "축하합니다! 공격력이 10 증가합니다!" << endl; 
-		player->setAttack(10);
+		
 	}
 	else {
 		cout << "아이템을 드랍하지 않았습니다!" << endl;
