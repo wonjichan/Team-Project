@@ -1,0 +1,8 @@
+﻿  Inventory.cpp
+C:\Users\red7s\source\repos\TeamProject1\TeamProject1\HealthPotion.h(5,7): error C2143: 구문 오류: ';'이(가) '<class-head>' 앞에 없습니다.
+  (소스 파일 'Inventory.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\red7s\source\repos\TeamProject1\TeamProject1\HealthPotion.h(5,20): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다.
+  (소스 파일 'Inventory.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\red7s\source\repos\TeamProject1\TeamProject1\Inventory.cpp(8,10): error C1083: 포함 파일을 열 수 없습니다. 'Character.h': No such file or directory
