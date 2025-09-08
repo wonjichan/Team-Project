@@ -3,7 +3,8 @@
 class Character; // Character 클래스가 뒤에 정의될 예정이라 전방 선언만 해둠
 
 // 모든 아이템의 공통 부모 클래스 (추상 클래스)
-class Item {
+class Item 
+{
 protected:
     std::string name;   // 아이템 이름 (예: "Health Potion")
     int quantity;       // 해당 아이템 개수

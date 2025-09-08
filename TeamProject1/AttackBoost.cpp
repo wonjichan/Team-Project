@@ -8,7 +8,8 @@ AttackBoost::AttackBoost(int quantity)
 
 // 사용 시: 캐릭터의 tempAttackBoost 값을 10 증가
 // → 전투 종료 시 clearTempBoost()로 초기화해야 함
-void AttackBoost::use(Character& character) {
+void AttackBoost::use(Character& character) 
+{
     character.addTempAttackBoost(attackIncrease);
     reduceQuantity(1); // 수량 1 감소
 }
