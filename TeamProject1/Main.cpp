@@ -2,8 +2,19 @@
 #include <windows.h>
 #include <conio.h>
 #include <iostream>
-#include <windows.h>
+#include <mmsystem.h>
+#pragma comment(lib, "winmm.lib")
+
 using namespace std;
+
+// 🎵 BGM 재생 함수
+void playBGM(const char* filename, bool loop = true) {
+    PlaySoundA(filename, NULL, SND_FILENAME | (loop ? SND_LOOP : 0) | SND_ASYNC);
+}
+void stopBGM() {
+    PlaySound(NULL, NULL, 0); // 음악 중지
+}
+
 // 콘솔 색상 설정 함수
 void setColor(int textColor, int bgColor = 0) {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -12,25 +23,10 @@ void setColor(int textColor, int bgColor = 0) {
 
 // 색상 코드 (Windows 콘솔 전용)
 enum ConsoleColor {
-    BLACK = 0,
-    BLUE = 1,
-    GREEN = 2,
-    CYAN = 3,
-    RED = 4,
-    MAGENTA = 5,
-    YELLOW = 6,
-    WHITE = 7,
-    GRAY = 8,
-    LIGHT_BLUE = 9,
-    LIGHT_GREEN = 10,
-    LIGHT_CYAN = 11,
-    LIGHT_RED = 12,
-    LIGHT_MAGENTA = 13,
-    LIGHT_YELLOW = 14,
-    BRIGHT_WHITE = 15
+    BLACK = 0, BLUE, GREEN, CYAN, RED, MAGENTA, YELLOW, WHITE,
+    GRAY = 8, LIGHT_BLUE, LIGHT_GREEN, LIGHT_CYAN,
+    LIGHT_RED, LIGHT_MAGENTA, LIGHT_YELLOW, BRIGHT_WHITE
 };
-
-
 
 // 타이틀 출력
 void showTitle()
@@ -78,6 +74,7 @@ void showTitle()
     setColor(WHITE, BLACK); // 마지막에 기본 색상으로 돌려놓기
 }
 
+
 // 화살표 메뉴 출력
 int arrowMenu()
 {
@@ -88,7 +85,9 @@ int arrowMenu()
 
     while (true)
     {
-        showTitle();
+        showTitle();  // 타이틀 출력 (용사의 모험까지)
+
+        // 메뉴는 용사의 모험 바로 밑에 출력됨
         for (int i = 0; i < menuSize; i++)
         {
             if (i == selected)
@@ -117,6 +116,9 @@ int arrowMenu()
 
 int main()
 {
+    // 🎵 시작하면 메뉴 브금 재생
+    playBGM("assets/audio/bgm_menu.wav");
+
     GameManager manager;
     Shop shop;
     string name;
@@ -147,16 +149,31 @@ int main()
                 << ", 공격력:" << player->getAttack() << endl;
 
             Inventory* inv = player->getInventory();
-            while (player->getHealth() >= 0)
+            while (player->getHealth() > 0)
             {
                 system("cls");
-                manager.generateMonster(player);
+
+                // 몬스터 생성
+                Monster* monster = manager.generateMonster(player);
+
+                // 🎵 전투 브금 (드래곤인지 확인)
+                stopBGM();
+                if (monster->getName() == "드래곤") {
+                    playBGM("assets/audio/bgm_dragon.wav");
+                }
+                else {
+                    playBGM("assets/audio/bgm_battle.wav");
+                }
+
                 cout << "배틀을 시작합니다!" << endl;
                 manager.Battle(player);
 
                 cout << "상점을 방문하시겠습니까? (Y/N):";
                 cin >> answer;
                 if (answer == "Y") {
+                    stopBGM();
+                    playBGM("assets/audio/bgm_shop.wav"); // 상점 브금
+
                     cout << "====상점에 오신것을 환영합니다!====" << endl;
                     cout << "1. 아이템 구매 2. 아이템 판매" << endl;
                     cin >> choice;
@@ -183,9 +200,16 @@ int main()
                 }
                 system("pause");
             }
+
+            // 캐릭터 사망 시
+            stopBGM();
+            playBGM("assets/audio/bgm_gameover.wav");
+            cout << "당신의 캐릭터가 죽었습니다..." << endl;
+            system("pause");
         }
         else if (menuChoice == 1) // 게임 종료하기
         {
+            stopBGM();
             cout << "게임을 종료합니다. 안녕히 가세요!" << endl;
             break;
         }
