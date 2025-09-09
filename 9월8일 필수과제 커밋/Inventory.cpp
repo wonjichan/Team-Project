@@ -13,6 +13,10 @@ Inventory::~Inventory() {
         delete item;
     }
 }
+vector<Item*> Inventory::getItem()
+{
+    return items;
+}
 // 같은 종류 아이템이 이미 있으면 수량 증가, 없으면 새로 추가
 void Inventory::addItem(Item* item)
 {
@@ -60,7 +64,7 @@ void Inventory::showItems() const
     // 인벤토리에 아이템이 있을 경우 목록 출력
     for (size_t i = 0; i < items.size(); i++)
     {
-        std::cout << i+1 << ": " << items[i]->getName()   // 아이템 이름 출력
+        std::cout <<"["<< i + 1 <<"]" << ": " << items[i]->getName()   // 아이템 이름 출력
             << " (x" << items[i]->getQuantity()   // 아이템 수량 출력
             << ")\n";
     }

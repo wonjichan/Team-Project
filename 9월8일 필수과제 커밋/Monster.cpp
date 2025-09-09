@@ -8,8 +8,16 @@ Monster::Monster(string _name) : name(_name)
 {
 	Character* player = Character::getInstance(name);
 	srand(static_cast<unsigned int>(time(nullptr)));
-	health = rand() % (player->GetLevel() * 20) + (player->GetLevel() * 30);
-	attack = rand() % (player->GetLevel() * 5) + (player->GetLevel() * 10);
+	if (player->GetLevel() < 10)
+	{
+		health = rand() % (player->GetLevel() * 20) + (player->GetLevel() * 30);
+		attack = rand() % (player->GetLevel() * 5) + (player->GetLevel() * 10);
+	}
+	else
+	{
+		health = rand() % (player->GetLevel() * 60) + (player->GetLevel() * 90);
+		attack = rand() % (player->GetLevel() * 15) + (player->GetLevel() * 30);
+	}
 	isBattle = false;
 }
 
@@ -42,24 +50,16 @@ void::Monster::takeDamage(Character* player)
 		{
 			player->levelUp();
 		}
-		cout << "전투에서 승리했습니다!" << "50 EXP와 " << Random_gold <<" 골드를 휙득했습니다. " << 
+		cout << "==================================================================================" << endl;
+		cout << "전투에서 승리했습니다!" << " 50 EXP와 " << Random_gold <<" 골드를 휙득했습니다. " << 
 			" 현재 EXP:" << player->getEXP() << "/100" << ", 골드:" << player->getGold() << endl;
-		//상점 방문 
-		cout << "상점을 방문하시겠습니까? (Y/N):";
-		cin >> answer; 
-		if (answer == "Y") {
-			cout << "상점을 방문" << endl;
-		}
-		else
-		{
-			cout << "전투를 계속 합니다!"<<endl;
-		}
+		cout << "==================================================================================" << endl;
 	}
 	//전투 중 몬스터가 죽지 않았을 때 
 	else
 	{
 		cout << getName() << "이(가) " << player->getAttack() << "의 피해를 입었습니다." << endl;
-		cout << "현재 체력: " << health << endl;
+		cout <<getName()<<"의 현재 체력: " << health << endl;
 		cout << "\n";
 	}
 	Sleep(500);
@@ -68,15 +68,17 @@ void::Monster::takeDamage(Character* player)
 void Monster::TryDropItem(Character* player)
 {
 	Inventory* inv = player->getInventory();
-	if (rand() % 100 < 30){
+	vector<Item*> item = inv->getItem(); 
+	if (rand() % 100 < 60){
 		cout << "아이템을 드랍했습니다!" << endl; 
-		if (rand() % 2)
-		{
-			inv->addItem(new HealthPotion());
+		int r = rand() % 10;  // 0 ~ 9 사이의 숫자 생성
+		if (r < 7) {
+			inv->addItem(new HealthPotion("(Drop)Health Potion",1,10));
+			cout << "체력 포션을 1개 얻었습니다." << endl;
 		}
-		else
-		{
-			inv->addItem(new AttackBoost());
+		else {
+			inv->addItem(new AttackBoost("(Drop)Attack Potion",1,15));
+			cout << "공격력 포션을 1개 얻었습니다." << endl;
 		}
 	}
 	else {

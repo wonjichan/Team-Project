@@ -1,7 +1,7 @@
 ﻿#include "Item.h"
 
 // 생성자: 이름과 수량 초기화
-Item::Item(const std::string & name, int quantity) : name(name), quantity(quantity) {
+Item::Item(const std::string & name, int quantity, int price) : name(name), quantity(quantity), price(price) {
 }
 
 // 아이템 이름 반환
@@ -29,4 +29,8 @@ void Item::reduceQuantity(int amount)
     {
         quantity -= amount;
     }
+}
+int Item::getPrice() const 
+{
+    return price; 
 }

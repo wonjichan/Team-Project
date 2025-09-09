@@ -35,6 +35,7 @@ public:
 	//setter() 
 	void setExp(int exp);
 	void setGold(int gold);
+	void desetGold(int gold); 
 	void setBattle(bool isplay);
 	void setHealth(int _heal);
 	void setAttack(int att);

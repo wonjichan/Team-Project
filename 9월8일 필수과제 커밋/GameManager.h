@@ -5,8 +5,7 @@
 #include "Troll.h"
 #include "Dragon.h"
 #include "Character.h"
-class Item;
-
+#include "Shop.h"
 class GameManager
 {
 private:

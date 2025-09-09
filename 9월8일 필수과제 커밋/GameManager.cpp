@@ -46,6 +46,7 @@ void GameManager::Battle(Character* player)
 	player->setBattle(true);
 	monster->settBattle(true);
 	cout << monster->getName() << " 등장! " << "체력: " << monster->getHealth() << ", 공격력: " << monster->getAttack() << endl;
+	cout << "\n";
 	while (player->IsBattle() && monster->IsBattle())
 	{
 		cout << "다음 행동을 입력하시오. 1.공격한다 2.물약 사용 3.상태창 보기 4.도망간다" << endl;
@@ -55,10 +56,18 @@ void GameManager::Battle(Character* player)
 			monster->takeDamage(player);
 		}
 		else if (choice == 2){
-			inv->showItems();
-			cout << "사용할 물약 번호를 고르세요" << endl; 
-			cin >> potion_num;
-			inv->useItem(potion_num-1,*player);
+			vector<Item*> items = inv->getItem();
+			if (!items.empty())
+			{
+				inv->showItems();
+				cout << "어떤 아이템을 사용하시겠습니까? 번호를 입력해주세요!" << endl;
+				cin >> potion_num;
+				inv->useItem(potion_num - 1, *player);
+			}
+			else
+			{
+				cout << "사용할 수 있는 아이템이 없습니다!" <<"\n"<< endl;
+			}
 		}
 		else if(choice == 3)
 		{

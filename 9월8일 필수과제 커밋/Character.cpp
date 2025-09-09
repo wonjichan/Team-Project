@@ -1,12 +1,14 @@
 #pragma once
 #include "Character.h"
 #include "Monster.h"
-
+class Item; 
 Character* Character::instance = nullptr;
+
 Inventory* Character::getInventory()
 {
 	return &inv; 
 }
+
 Character::Character(string name):name(name)
 {
 	level = 1; health = 200; attack = 30; experience = 0;
@@ -31,7 +33,7 @@ void Character::levelUp()
 		maxHealth += level * 20; 
 		health = maxHealth; 
 		attack += level * 5;
-		cout << "Level Up!!! 레벨이 " << level << "이 되었습니다!" << endl;
+		cout << "Level Up!!! 레벨이" << level << "이(가) 되었습니다!" << endl;
 	}
 }
 void Character::useItem(int index)
@@ -51,6 +53,7 @@ void Character::setGold(int gold)
 {
 	this->gold += gold; 
 }
+void Character::desetGold(int gold) { this->gold -= gold; }
 int Character::getEXP(){return experience;}
 int Character::getGold() { return gold; }
 int Character::getAttack() { return attack; }
@@ -86,7 +89,7 @@ void Character::takeDamage(Monster* monster)
 	}
 	else {
 		cout << getName() << "이(가) " << monster->getAttack() << "의 피해를 입었습니다." << endl;
-		cout << "현재 체력: " << health << endl;
+		cout <<getName()<<"의 현재 체력: " << health << endl;
 		cout << "\n";
 	}
 }
