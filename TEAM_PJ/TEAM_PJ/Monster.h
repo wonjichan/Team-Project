@@ -1,23 +1,28 @@
 #pragma once
 #include <string>
+#include <iostream>
+#include <ctime>
+#include <windows.h>
+class Inventory;
+class Character; 
+class HealthPotion; 
+class AttackBoost;
 
-class Monster 
-
+using namespace std; 
+class Monster
 {
 protected:
-	std::string name;
-	int health;
-	int attack;
-
-	void tryDropItem() const; //공통 아이템 드랍 함수
-
-
+	string name; 
+	int health; 
+	int attack; 
+	bool isBattle; 
 public:
-	virtual ~Monster(){}
-
-	std::string getName() const;  //상속받는 public 
-	int getHealth() const;  // 일반 public
-	int getAttack() const;  // 일반 public
-
-	virtual void takeDamage(int damage) = 0; //가상함수
+	Monster(string _name);
+	int getAttack(); 
+	virtual string getName(); 
+	virtual int getHealth();
+	virtual void takeDamage(Character* character);
+	virtual void TryDropItem(Character* player);
+	void settBattle(bool isplay);
+	bool IsBattle();
 };

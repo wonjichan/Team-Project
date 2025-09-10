@@ -1,15 +1,9 @@
 #pragma once
 #include "Monster.h"
-#include <string>
 
-
-class Slime : public Monster
+class Slime : public Monster 
 {
-
 public:
-	Slime(const std::string& n, int level);
-
-	void takeDamage(int damage) override;
-
+	Slime(string name);
+	void takeDamage(Character* character);
 };
-
